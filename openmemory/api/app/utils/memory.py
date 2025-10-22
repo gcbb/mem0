@@ -153,7 +153,7 @@ def get_default_memory_config():
     # Detect vector store based on environment variables
     vector_store_config = {
         "collection_name": "openmemory",
-        "host": "mem0_store",
+        "host": "localhost",
     }
     
     # Check for different vector store configurations based on environment variables
