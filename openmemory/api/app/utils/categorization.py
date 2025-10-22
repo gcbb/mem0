@@ -1,4 +1,6 @@
 import logging
+import os
+from openai import OpenAI
 from typing import List
 
 from app.utils.prompts import MEMORY_CATEGORIZATION_PROMPT
@@ -8,8 +10,26 @@ from pydantic import BaseModel
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 load_dotenv()
-openai_client = OpenAI()
+CATEGORIZATION_OPENAI_BASE_URL = os.environ.get(
+    "CATEGORIZATION_OPENAI_BASE_URL", "https://api.openai.com/v1"
+)
+CATEGORIZATION_OPENAI_API_KEY = os.environ.get(
+    "CATEGORIZATION_OPENAI_API_KEY",
+    os.environ.get("OPENAI_API_KEY"),
+)
+CATEGORIZATION_OPENAI_MODEL = os.environ.get(
+    "CATEGORIZATION_OPENAI_MODEL", "gpt-4o-mini"
+)
+openai_client = OpenAI(
+    base_url=CATEGORIZATION_OPENAI_BASE_URL, api_key=CATEGORIZATION_OPENAI_API_KEY
+)
 
+print(f"✅ Categorization OpenAI Client initialized:")
+print(f"   📍 Categorizatoin Base URL: {CATEGORIZATION_OPENAI_BASE_URL}")
+print(f"   🤖 Categorizatoin Model: {CATEGORIZATION_OPENAI_MODEL}")
+print(
+    f"   🔑 Categorizatoin API Key: {'***' + CATEGORIZATION_OPENAI_API_KEY[-4:] if len(CATEGORIZATION_OPENAI_API_KEY) > 4 else '***'}"
+)
 
 class MemoryCategories(BaseModel):
     categories: List[str]
@@ -25,7 +45,7 @@ def get_categories_for_memory(memory: str) -> List[str]:
 
         # Let OpenAI handle the pydantic parsing directly
         completion = openai_client.beta.chat.completions.parse(
-            model="gpt-4o-mini",
+            model=CATEGORIZATION_OPENAI_MODEL,
             messages=messages,
             response_format=MemoryCategories,
             temperature=0
