@@ -11,14 +11,14 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 load_dotenv()
 CATEGORIZATION_OPENAI_BASE_URL = os.environ.get(
-    "CATEGORIZATION_OPENAI_BASE_URL", "https://api.openai.com/v1"
+    "CATEGORIZATION_OPENAI_BASE_URL", os.environ.get("OPENAI_BASE_URL")
 )
 CATEGORIZATION_OPENAI_API_KEY = os.environ.get(
     "CATEGORIZATION_OPENAI_API_KEY",
     os.environ.get("OPENAI_API_KEY"),
 )
 CATEGORIZATION_OPENAI_MODEL = os.environ.get(
-    "CATEGORIZATION_OPENAI_MODEL", "gpt-4o-mini"
+    "CATEGORIZATION_OPENAI_MODEL", os.environ.get("OPENAI_MODEL")
 )
 openai_client = OpenAI(
     base_url=CATEGORIZATION_OPENAI_BASE_URL, api_key=CATEGORIZATION_OPENAI_API_KEY

@@ -44,13 +44,13 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 OPENAI_BASE_URL = os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
 OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 OPENAI_EMBEDDING_MODEL_BASE_URL = os.environ.get(
-    "OPENAI_EMBEDDING_MODEL_BASE_URL", "https://api.openai.com/v1"
+    "OPENAI_EMBEDDING_MODEL_BASE_URL", OPENAI_BASE_URL
 )
 OPENAI_EMBEDDING_MODEL_API_KEY = os.environ.get(
     "OPENAI_EMBEDDING_MODEL_API_KEY", OPENAI_API_KEY
 )
 OPENAI_EMBEDDING_MODEL = os.environ.get(
-    "OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"
+    "OPENAI_EMBEDDING_MODEL"
 )
 OPENAI_EMBEDDING_MODEL_DIMS = int(os.environ.get("OPENAI_EMBEDDING_MODEL_DIMS", 1536))
 
