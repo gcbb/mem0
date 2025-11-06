@@ -503,6 +503,7 @@ class Memory(MemoryBase):
                     messages=[{"role": "user", "content": function_calling_prompt}],
                     response_format={"type": "json_object"},
                 )
+                llm_response = response
             except Exception as e:
                 logger.error(f"Error in new memory actions response: {e}")
                 response = ""
@@ -515,7 +516,7 @@ class Memory(MemoryBase):
                     response = remove_code_blocks(response)
                     new_memories_with_actions = json.loads(response)
             except Exception as e:
-                logger.error(f"Invalid JSON response: {e} response{response}")
+                logger.error(f"Invalid JSON response: {e} response{response},llm_response{llm_response}")
                 new_memories_with_actions = {}
         else:
             new_memories_with_actions = {}
