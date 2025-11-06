@@ -515,7 +515,7 @@ class Memory(MemoryBase):
                     response = remove_code_blocks(response)
                     new_memories_with_actions = json.loads(response)
             except Exception as e:
-                logger.error(f"Invalid JSON response: {e}")
+                logger.error(f"Invalid JSON response: {e} response{response}")
                 new_memories_with_actions = {}
         else:
             new_memories_with_actions = {}
